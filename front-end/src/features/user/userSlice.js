@@ -1,18 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  isMember: true,
-};
+const initialState = {};
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    toggleMember: (state, { payload }) => {
-      state.isMember = payload;
+    loginUser: (state, { payload }) => {
+      console.log(payload);
+    },
+    registerUser: (state, { payload }) => {
+      console.log(payload);
     },
   },
 });
 
-export const { toggleMember } = userSlice.actions;
+export const { loginUser, registerUser } = userSlice.actions;
 export default userSlice.reducer;

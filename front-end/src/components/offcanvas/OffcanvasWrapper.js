@@ -1,22 +1,22 @@
 import React from 'react';
 import Offcanvas from './Offcanvas';
 import { useSelector } from 'react-redux';
-import OffcanvasSearch from './OffcanvasSearch';
-import OffcanvasAccount from './OffcanvasAccount';
-import OffcanvasCart from './OffcanvasCart';
+import Search from './Search';
+import Register from './Register';
+import Cart from './Cart';
 
 const OffcanvasWrapper = () => {
   const { component } = useSelector((store) => store.offcanvas);
   let comp = null;
   switch (component) {
     case 'search':
-      comp = <OffcanvasSearch />;
+      comp = <Search />;
       break;
     case 'account':
-      comp = <OffcanvasAccount />;
+      comp = <Register />;
       break;
     case 'cart':
-      comp = <OffcanvasCart />;
+      comp = <Cart />;
       break;
     default:
       comp = null;

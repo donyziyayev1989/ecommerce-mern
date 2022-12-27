@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from '../assets/logo-dark.png';
-import CollapsableMenu from './CollapsableMenu';
+import CollapsableMenu from './Menu';
 import NavbarButtons from './NavbarButtons';
 const Header = () => {
   return (

@@ -18,7 +18,7 @@ const OffcanvasSearch = () => {
             placeholder='Search site'
             aria-label='Search site'
             aria-describedby='search-icon'
-            autocomplete='off'
+            autoComplete='off'
           />
           <div
             className='easy-autocomplete-container'

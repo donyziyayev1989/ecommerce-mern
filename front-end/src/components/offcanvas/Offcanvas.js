@@ -6,13 +6,7 @@ const Offcanvas = ({ children }) => {
   const { show, title } = useSelector((store) => store.offcanvas);
   const dispatch = useDispatch();
   return (
-    <div
-      className={`${
-        show
-          ? 'offcanvas offcanvas-reverse show'
-          : 'offcanvas offcanvas-reverse'
-      }`}
-    >
+    <div className={`offcanvas offcanvas-reverse ${show ? 'show' : ''}`}>
       <div className='offcanvas-header d-flex justify-content-between align-items-center'>
         <h3 className='offcanvas-title'>{title}</h3>
         <button
