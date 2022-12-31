@@ -14,6 +14,7 @@ const ProductCard = ({
   title,
   oldPrice,
   stock,
+  setViewId,
 }) => {
   return (
     <div className='product-card mb-4'>
@@ -51,7 +52,12 @@ const ProductCard = ({
         <button className='btn btn-primary btn-sm btn-block' type='button'>
           Add to cart
         </button>
-        <a className='quick-view-btn' href='#quick-view' data-toggle='modal'>
+        <a
+          className='quick-view-btn'
+          href='#quick-view'
+          data-toggle='modal'
+          onClick={() => setViewId(id)}
+        >
           <FiEye className='mr-1' />
           Quick view
         </a>

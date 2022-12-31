@@ -40,13 +40,13 @@ const Pagination = ({
               }`}
               key={page}
             >
-              <Link
+              <button
                 to={`?page=${page}`}
                 className='page-link'
                 onClick={(e) => goToPage(page)}
               >
                 {page}
-              </Link>
+              </button>
             </li>
           );
         })}

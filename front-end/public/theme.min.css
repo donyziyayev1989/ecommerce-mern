@@ -12110,15 +12110,14 @@ a.card:hover {
   margin-top: 0.0625rem;
 }
 .easy-autocomplete-container > ul {
-  display: none;
   margin: 0;
   padding: 0;
   padding-top: 1rem;
   background-color: #fff;
   list-style: none;
 }
-.easy-autocomplete-container > ul li {
-  margin: 0;
+.easy-autocomplete-container > ul .list-group-item{
+  padding: 0.5rem 0.2rem;
 }
 .eac-item > a {
   display: inline-block;
@@ -12843,7 +12842,7 @@ a.card:hover {
 }
 .widget-categories ul > li > a.active,
 .widget-links ul > li > a.active {
-  color: rgba(0, 0, 0, 0.9);
+  color: #5c77fc;
 }
 .widget-categories ul > li > a .badge,
 .widget-links ul > li > a .badge {
@@ -13792,4 +13791,24 @@ html:not([dir='rtl']) .noUi-horizontal .noUi-handle {
 }
 .disable-link {
   pointer-events: none;
+}
+.price-range .input-group-text {
+  padding: 0.5rem 0.3rem;
+}
+.modal {
+  display: block !important;
+}
+.object-fit-cover {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+  flex-grow: 0;
+}
+.rating span {
+  color: #ffc107;
+  margin-right: 6px;
+  font-size: 1.2rem;
+}
+.open-modal .modal {
+  z-index: 1050;
 }

@@ -2,6 +2,14 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { useFetch } from './../../util/useFetch';
 
+const initialFiltersState = {
+  categories: [],
+  selectedCategory: '',
+  minPrice: 0,
+  maxPrice: 0,
+  search: '',
+};
+
 const initialState = {
   isLoading: false,
   products: [],
@@ -9,14 +17,42 @@ const initialState = {
   numOfPages: 1,
   page: 1,
   limit: 12,
-  categories: [],
+  quickViewId: null,
+  isSearchLoading: false,
+  quickSearchItems: [],
+  ...initialFiltersState,
 };
 export const getAllProducts = createAsyncThunk(
   'allProduct/getAllProducts',
   async (_, thunkAPI) => {
-    const { limit, page } = thunkAPI.getState().allProducts;
+    const { limit, page, selectedCategory, search } =
+      thunkAPI.getState().allProducts;
     const skip = limit * (page - 1);
     let url = `https://dummyjson.com/products?limit=${limit}&skip=${skip}`;
+
+    if (selectedCategory) {
+      url = `https://dummyjson.com/products/category/${selectedCategory}?limit=${limit}&skip=${skip}`;
+    }
+    if (search) {
+      url = `https://dummyjson.com/products/search?q=${search}&limit=${limit}&skip=${skip}`;
+    }
+
+    const res = await fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => thunkAPI.rejectWithValue(error));
+
+    return res;
+  }
+);
+export const searchProducts = createAsyncThunk(
+  'allProduct/searchProducts',
+  async (_, thunkAPI) => {
+    const { search } = thunkAPI.getState().allProducts;
+    let url;
+    url = `https://dummyjson.com/products/search?q=${search}`;
     const res = await fetch(url)
       .then((res) => res.json())
       .then((data) => {
@@ -41,6 +77,7 @@ export const getAllCategories = createAsyncThunk(
     return res;
   }
 );
+
 const allProductSlice = createSlice({
   name: 'allProduct',
   initialState,
@@ -56,6 +93,29 @@ const allProductSlice = createSlice({
     },
     setLimit: (state, { payload }) => {
       state.limit = Number(payload);
+    },
+    setCategory: (state, { payload }) => {
+      state.selectedCategory = payload;
+      state.page = 1;
+    },
+    setMinPrice: (state, { payload }) => {
+      state.minPrice = payload;
+    },
+    setMaxPrice: (state, { payload }) => {
+      state.maxPrice = payload;
+    },
+    clearFilters: (state) => {
+      state.selectedCategory = '';
+      state.page = 1;
+    },
+    setViewId: (state, { payload }) => {
+      state.quickViewId = payload;
+    },
+    handleValue: (state, { payload }) => {
+      return {
+        ...state,
+        ...payload,
+      };
     },
   },
   extraReducers: {
@@ -74,9 +134,30 @@ const allProductSlice = createSlice({
     [getAllCategories.fulfilled]: (state, { payload }) => {
       state.categories = payload;
     },
+    [searchProducts.pending]: (state) => {
+      state.isSearchLoading = true;
+    },
+    [searchProducts.fulfilled]: (state, { payload }) => {
+      state.isSearchLoading = false;
+      state.quickSearchItems = payload.products.slice(0, 10);
+    },
+    [searchProducts.rejected]: (state) => {
+      state.isSearchLoading = false;
+    },
   },
 });
 
-export const { nextPage, goToPage, prevPage, setLimit } =
-  allProductSlice.actions;
+export const {
+  nextPage,
+  goToPage,
+  prevPage,
+  setLimit,
+  setCategory,
+  setMinPrice,
+  setMaxPrice,
+  clearFilters,
+  setViewId,
+  handleValue,
+  searchHandle,
+} = allProductSlice.actions;
 export default allProductSlice.reducer;

@@ -6,14 +6,14 @@ import { Outlet } from 'react-router-dom';
 
 const Wrapper = () => {
   return (
-    <div>
+    <>
       <OffcanvasWrapper />
       <Header />
 
       <Outlet />
 
       <Footer />
-    </div>
+    </>
   );
 };
 

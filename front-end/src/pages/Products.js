@@ -3,16 +3,20 @@ import { FiHome } from 'react-icons/fi';
 import ProductList from '../components/product/ProductList';
 import Sidebar from '../components/Sidebar';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllProducts } from '../features/allProduct/allProductSlice';
-import Loading from './../components/Loading';
+import Sort from '../components/Sort';
+import FilterProduct from '../components/FilterProduct';
 import Pagination from '../components/Pagination';
+import Loading from './../components/Loading';
+
 import {
   nextPage,
   goToPage,
   prevPage,
   setLimit,
+  getAllCategories,
+  getAllProducts,
+  handleValue,
 } from '../features/allProduct/allProductSlice';
-import Sort from '../components/Sort';
 
 const Products = () => {
   const {
@@ -22,7 +26,8 @@ const Products = () => {
     totalProducts,
     numOfPages,
     limit,
-    categories,
+    selectedCategory,
+    search,
   } = useSelector((store) => store.allProducts);
   const dispatch = useDispatch();
 
@@ -39,9 +44,16 @@ const Products = () => {
     dispatch(setLimit(val));
   };
 
+  // Getting all categories
+  useEffect(() => {
+    dispatch(getAllCategories());
+  }, []);
+
+  // Get all products
   useEffect(() => {
     dispatch(getAllProducts());
-  }, [page, limit]);
+  }, [page, limit, selectedCategory]);
+
   return (
     <>
       <div className='page-title-wrapper' aria-label='Page title'>
@@ -66,17 +78,9 @@ const Products = () => {
       <div className='container pb-5 mb-4'>
         <div className='row'>
           <Sidebar>
-            <h1>Sidebar</h1>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Consequuntur, necessitatibus et molestias magni blanditiis, enim,
-            quos maiores expedita a provident magnam assumenda dolore iusto!
-            Odio consequuntur non consequatur alias eius, sed eum omnis error
-            ratione laborum. Deserunt consequuntur voluptas reiciendis earum
-            doloremque itaque facere, at libero ipsa ipsum. Totam eveniet neque
-            ullam tempora reprehenderit alias voluptatem velit ea perferendis
+            <FilterProduct />
           </Sidebar>
           <div className='col-lg-9'>
-            {/* {isLoading && <Loading type='primary' />} */}
             <Sort
               goToPage={goToPageNumber}
               currentPage={page}
@@ -85,15 +89,38 @@ const Products = () => {
               setLimit={setLimits}
               limit={limit}
             />
-            <ProductList classes='col-md-4 col-sm-6' products={products} />
-            <hr className='pb-4 mb-2' />
-            <Pagination
-              numOfPages={numOfPages}
-              nextPage={nextPageHandler}
-              prevPage={prevPageHandler}
-              goToPage={goToPageNumber}
-              currentPage={page}
+            {isLoading && <Loading type='primary' />}
+            {search && (
+              <div className='d-flex align-items-center mb-3 justify-content-between'>
+                <h5 className='mb-0'>
+                  {totalProducts} products found for the term "{search}""
+                </h5>
+                <button
+                  className='btn btn-outline-dark'
+                  onClick={() => {
+                    dispatch(handleValue({ search: '' }));
+                    dispatch(getAllProducts());
+                  }}
+                >
+                  clear search
+                </button>
+              </div>
+            )}
+            <ProductList
+              classes='col-md-4 col-sm-6'
+              products={products}
+              isLoading={isLoading}
             />
+            <hr className='pb-4 mb-2' />
+            {numOfPages > 1 && (
+              <Pagination
+                numOfPages={numOfPages}
+                nextPage={nextPageHandler}
+                prevPage={prevPageHandler}
+                goToPage={goToPageNumber}
+                currentPage={page}
+              />
+            )}
           </div>
         </div>
       </div>

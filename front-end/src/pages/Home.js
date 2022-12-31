@@ -1,6 +1,5 @@
 import React from 'react';
-import Carousel from './../components/Carousel';
-import ProductList from '../components/product/ProductList';
+import CarouselHome from '../components/Carousel/CarouselHome';
 
 const items = [
   {
@@ -35,8 +34,7 @@ const items = [
 const Home = () => {
   return (
     <>
-      <Carousel items={items} />
-
+      <CarouselHome items={items} />
       <section className='container pt-3 pb-4'>
         <h2 className='h3 text-center pb-4'>Featured products</h2>
       </section>

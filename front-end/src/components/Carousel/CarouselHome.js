@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FiArrowRight, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-
-const Carousel = ({ items }) => {
+import { AnimatePresence, motion } from 'framer-motion';
+const CarouselHome = ({ items }) => {
   const [index, setIndex] = useState(0);
   const length = items.length;
 
@@ -46,7 +46,7 @@ const Carousel = ({ items }) => {
                     src={process.env.PUBLIC_URL + img}
                     alt={title}
                   />
-                  <h2 className='mb-1'>{title}</h2>
+                  <motion.h2 className='mb-1'>{title}</motion.h2>
                   <h3 className='font-weight-light opacity-70 pb-3'>
                     {subtitle}
                   </h3>
@@ -79,11 +79,18 @@ const Carousel = ({ items }) => {
         </div>
         <div className='col-md-6'>
           {
-            <img
-              className='ml-auto mr-0 carousel-img'
-              src={process.env.PUBLIC_URL + items[index].imgLg}
-              alt={items[index]}
-            ></img>
+            <AnimatePresence>
+              {items[index] && (
+                <motion.img
+                  className='ml-auto mr-0 carousel-img'
+                  src={process.env.PUBLIC_URL + items[index].imgLg}
+                  alt={items[index].title}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                ></motion.img>
+              )}
+            </AnimatePresence>
           }
         </div>
       </div>
@@ -91,4 +98,4 @@ const Carousel = ({ items }) => {
   );
 };
 
-export default Carousel;
+export default CarouselHome;
