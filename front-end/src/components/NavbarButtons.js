@@ -1,10 +1,11 @@
 import React from 'react';
 import { CartIcon, LoginIcon, MenuIcon, SearchIcon } from './../assets/icons';
-import { useDispatch } from 'react-redux';
-import { show } from '../features/offcanvas/offcanvasSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { showOffCanvas } from '../features/ui/uiSlice';
 
 const NavbarButtons = () => {
   const dispatch = useDispatch();
+  const { total, totalProducts } = useSelector((store) => store.cart);
   return (
     <div className='navbar-btns'>
       <div className='navbar-btns-inner'>
@@ -20,7 +21,9 @@ const NavbarButtons = () => {
           className='navbar-btn'
           data-href='#offcanvas-search'
           onClick={() =>
-            dispatch(show({ title: 'Search site', component: 'search' }))
+            dispatch(
+              showOffCanvas({ title: 'Search site', component: 'search' })
+            )
           }
         >
           <SearchIcon />
@@ -31,7 +34,10 @@ const NavbarButtons = () => {
           data-href='#offcanvas-account'
           onClick={() =>
             dispatch(
-              show({ title: 'Sign in / Create account', component: 'account' })
+              showOffCanvas({
+                title: 'Sign in / Create account',
+                component: 'account',
+              })
             )
           }
         >
@@ -42,13 +48,14 @@ const NavbarButtons = () => {
           className='navbar-btn'
           href='#offcanvas-cart'
           onClick={() =>
-            dispatch(show({ title: 'Your cart', component: 'cart' }))
+            dispatch(showOffCanvas({ title: 'Your cart', component: 'cart' }))
           }
         >
           <span className='d-block position-relative'>
-            <span className='navbar-btn-badge bg-primary text-light'>4</span>
-            <CartIcon />
-            $325.00
+            <span className='navbar-btn-badge bg-primary text-light'>
+              {totalProducts}
+            </span>
+            <CartIcon />${total}
           </span>
         </button>
       </div>

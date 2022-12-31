@@ -1,10 +1,10 @@
 import React from 'react';
 import { FiChevronsRight } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleSidebar } from '../features/offcanvas/offcanvasSlice';
+import { toggleSidebar } from '../features/ui/uiSlice';
 
 const Sidebar = ({ children }) => {
-  const { isSidebarOpen } = useSelector((store) => store.offcanvas);
+  const { isSidebarOpen } = useSelector((store) => store.ui);
   const dispatch = useDispatch();
 
   return (

@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FiHeart, FiInfo, FiShoppingCart } from 'react-icons/fi';
 import Carousel from '../Carousel/Carousel';
 import Loading from '../Loading';
 import Rating from '../Rating';
 
-const QuickView = ({ images, rating, isLoading }) => {
+const QuickView = ({
+  id,
+  thumbnail,
+  price,
+  stock,
+  images,
+  title,
+  rating,
+  isLoading,
+  addToCart,
+}) => {
+  const [quantity, setQuantity] = useState(1);
   if (isLoading) {
     return <Loading />;
   }
@@ -35,12 +46,29 @@ const QuickView = ({ images, rating, isLoading }) => {
                 className='px-2 form-control mr-2'
                 type='number'
                 name='quantity'
+                min={1}
+                max={stock}
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
                 style={{ width: '3.2rem' }}
                 required=''
               />
             </div>
             <div>
-              <button className='btn btn-primary px-5 mr-2' type='submit'>
+              <button
+                className='btn btn-primary px-5 mr-2'
+                type='submit'
+                onClick={() =>
+                  addToCart({
+                    id,
+                    thumbnail,
+                    price,
+                    stock,
+                    title,
+                    count: quantity,
+                  })
+                }
+              >
                 <FiShoppingCart />
                 Add to cart
               </button>

@@ -6,9 +6,9 @@ import Register from './Register';
 import Cart from './Cart';
 
 const OffcanvasWrapper = () => {
-  const { component } = useSelector((store) => store.offcanvas);
+  const { offcanvasComponent } = useSelector((store) => store.ui);
   let comp = null;
-  switch (component) {
+  switch (offcanvasComponent) {
     case 'search':
       comp = <Search />;
       break;

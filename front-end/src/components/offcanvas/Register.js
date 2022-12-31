@@ -1,12 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { LockIcon, SignInIcon, UserIcon, MailIcon } from '../../assets/icons';
-import { useSelector } from 'react-redux';
-import {
-  loginUser,
-  registerUser,
-  toggleMember,
-} from '../../features/user/userSlice';
+import { loginUser, registerUser } from '../../features/user/userSlice';
 import { useDispatch } from 'react-redux';
 import FormGroup from '../form/FormGroup';
 import Button from '../Button';

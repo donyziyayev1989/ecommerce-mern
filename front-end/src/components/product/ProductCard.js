@@ -15,6 +15,7 @@ const ProductCard = ({
   oldPrice,
   stock,
   setViewId,
+  addToCart,
 }) => {
   return (
     <div className='product-card mb-4'>
@@ -49,7 +50,11 @@ const ProductCard = ({
         </span>
       </div>
       <div className='product-card-body body-hidden'>
-        <button className='btn btn-primary btn-sm btn-block' type='button'>
+        <button
+          className='btn btn-primary btn-sm btn-block'
+          type='button'
+          onClick={() => addToCart({ id, thumbnail, price, stock, title })}
+        >
           Add to cart
         </button>
         <a
