@@ -1,7 +1,7 @@
-import React, { useState, Children } from 'react';
+import React, { useState, Children, useEffect } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
-const Carousel = ({ children }) => {
+const Carousel = ({ children, goToSlideIndex }) => {
   const [index, setIndex] = useState(0);
   const carouselArray = Children.toArray(children);
   const length = carouselArray.length;
@@ -25,11 +25,17 @@ const Carousel = ({ children }) => {
       return checkIndex(nextIndex);
     });
   };
+  const gotoSlide = (n) => {
+    setIndex(() => checkIndex(n));
+  };
+  useEffect(() => {
+    gotoSlide(goToSlideIndex);
+  }, [goToSlideIndex]);
 
   return (
     <div className='carousel-wrapper'>
       <div
-        className='carousel mx-auto my-sm-4'
+        className='carousel mx-auto'
         style={{ transform: `translateX(${style(index)})` }}
       >
         {carouselArray.map((item, i) => {

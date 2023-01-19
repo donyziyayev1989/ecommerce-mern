@@ -1,18 +1,26 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { hideOffCanvas } from '../../features/ui/uiSlice';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Offcanvas = ({ children }) => {
   const { offcanvasShow, offcanvasTitle } = useSelector((store) => store.ui);
   const dispatch = useDispatch();
   return (
     <>
-      {offcanvasShow && (
-        <div
-          className='backdrop'
-          onClick={() => dispatch(hideOffCanvas())}
-        ></div>
-      )}
+      <AnimatePresence>
+        {offcanvasShow && (
+          <motion.div
+            className='backdrop'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            onClick={() => dispatch(hideOffCanvas())}
+          ></motion.div>
+        )}
+      </AnimatePresence>
+
       <div
         className={`offcanvas offcanvas-reverse ${offcanvasShow ? 'show' : ''}`}
       >

@@ -1,6 +1,8 @@
+import { AnimateSharedLayout, motion } from 'framer-motion';
 import React, { useState } from 'react';
 import { FiChevronRight, FiChevronDown } from 'react-icons/fi';
 import { useSelector, useDispatch } from 'react-redux';
+
 import {
   setCategory,
   setMinPrice,
@@ -24,42 +26,46 @@ const FilterProduct = () => {
       <div className='widget widget-categories mb-4 py-1'>
         <h3 className='widget-title'>Shop categories</h3>
         <ul id='shopCategories'>
-          {categories.map((cats, index) => {
-            if (index < 7) {
-              return (
-                <li key={index}>
-                  <a
-                    href={'#' + cats}
-                    className={`${selectedCategory === cats ? 'active' : ''}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      selectCategory(cats);
-                    }}
-                  >
-                    <FiChevronRight className='widget-categories-indicator' />
-                    {cats}
-                  </a>
-                </li>
-              );
-            }
-            if (index >= 7 && showAll) {
-              return (
-                <li key={index}>
-                  <a
-                    href={'#' + cats}
-                    className={`${selectedCategory === cats ? 'active' : ''}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      selectCategory(cats);
-                    }}
-                  >
-                    <FiChevronRight className='widget-categories-indicator' />
-                    {cats}
-                  </a>
-                </li>
-              );
-            }
-          })}
+          <AnimateSharedLayout>
+            {categories.map((cats, index) => {
+              if (index < 7) {
+                return (
+                  <motion.li key={index}>
+                    <a
+                      href={'#' + cats}
+                      className={`${selectedCategory === cats ? 'active' : ''}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        selectCategory(cats);
+                      }}
+                    >
+                      <FiChevronRight className='widget-categories-indicator' />
+                      {cats}
+                    </a>
+                    {selectedCategory === cats ? <ActiveBg /> : null}
+                  </motion.li>
+                );
+              }
+              if (index >= 7 && showAll) {
+                return (
+                  <li key={index}>
+                    <a
+                      href={'#' + cats}
+                      className={`${selectedCategory === cats ? 'active' : ''}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        selectCategory(cats);
+                      }}
+                    >
+                      <FiChevronRight className='widget-categories-indicator' />
+                      {cats}
+                    </a>
+                    {selectedCategory === cats ? <ActiveBg /> : null}
+                  </li>
+                );
+              }
+            })}
+          </AnimateSharedLayout>
           <a
             href='/#'
             className='text-primary'
@@ -120,3 +126,21 @@ const FilterProduct = () => {
 };
 
 export default FilterProduct;
+
+function ActiveBg() {
+  return (
+    <motion.div
+      layoutId='activeItem'
+      style={{
+        width: 'calc(100%)',
+        height: '100%',
+        position: 'absolute',
+        top: '0',
+        left: '0',
+        backgroundColor: '#f1f1f1',
+        zIndex: '-2',
+        borderRadius: '3px',
+      }}
+    />
+  );
+}

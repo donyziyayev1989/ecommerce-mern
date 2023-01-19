@@ -3,23 +3,23 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const initialState = {
   isSingleLoading: false,
-  product: null,
+  product: {},
   count: 1,
 };
 
 export const getSingleProduct = createAsyncThunk(
   'getSingleProduct/product',
-  async (userId, thunkAPI) => {
-    const res =
-      userId &&
-      (await fetch(`https://dummyjson.com/products/${userId}`)
+  async (productId, thunkAPI) => {
+    if (productId) {
+      const res = await fetch(`https://dummyjson.com/products/${productId}`)
         .then((res) => res.json())
         .then((data) => {
           return data;
         })
-        .catch((error) => thunkAPI.rejectWithValue(error)));
+        .catch((error) => thunkAPI.rejectWithValue(error));
 
-    return res;
+      return res;
+    }
   }
 );
 

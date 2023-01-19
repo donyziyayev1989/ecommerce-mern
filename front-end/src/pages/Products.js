@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { FiHome } from 'react-icons/fi';
 import ProductList from '../components/product/ProductList';
 import Sidebar from '../components/Sidebar';
 import { useSelector, useDispatch } from 'react-redux';
@@ -7,6 +6,7 @@ import Sort from '../components/Sort';
 import FilterProduct from '../components/FilterProduct';
 import Pagination from '../components/Pagination';
 import Loading from './../components/Loading';
+import PageTitle from '../components/PageTitle';
 
 import {
   nextPage,
@@ -56,25 +56,7 @@ const Products = () => {
 
   return (
     <>
-      <div className='page-title-wrapper' aria-label='Page title'>
-        <div className='container'>
-          <nav aria-label='breadcrumb'>
-            <ol className='breadcrumb'>
-              <li className='mt-n1 mr-1'>
-                <FiHome className='icon' />
-              </li>
-              <li className='breadcrumb-item'>
-                <a href='index.html'>Home</a>
-              </li>
-              <li className='breadcrumb-item'>
-                <a href='#'>Shop</a>
-              </li>
-            </ol>
-          </nav>
-
-          <hr className='mt-4' />
-        </div>
-      </div>
+      <PageTitle />
       <div className='container pb-5 mb-4'>
         <div className='row'>
           <Sidebar>
@@ -95,15 +77,17 @@ const Products = () => {
                 <h5 className='mb-0'>
                   {totalProducts} products found for the term "{search}""
                 </h5>
-                <button
+                <a
+                  href='/#'
                   className='btn btn-outline-dark'
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.preventDefault();
                     dispatch(handleValue({ search: '' }));
                     dispatch(getAllProducts());
                   }}
                 >
                   clear search
-                </button>
+                </a>
               </div>
             )}
             <ProductList

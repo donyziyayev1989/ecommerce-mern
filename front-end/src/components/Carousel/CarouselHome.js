@@ -77,22 +77,23 @@ const CarouselHome = ({ items }) => {
             </button>
           </div>
         </div>
-        <div className='col-md-6'>
-          {
-            <AnimatePresence>
-              {items[index] && (
-                <motion.img
-                  className='ml-auto mr-0 carousel-img'
-                  src={process.env.PUBLIC_URL + items[index].imgLg}
-                  alt={items[index].title}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                ></motion.img>
-              )}
-            </AnimatePresence>
-          }
-        </div>
+        <AnimatePresence>
+          <div className='col-md-6'>
+            {items[index] && (
+              <motion.img
+                className='ml-auto mr-0 carousel-img'
+                key={items[index]}
+                src={process.env.PUBLIC_URL + items[index].imgLg}
+                alt={items[index].title}
+                layout
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.9 }}
+              />
+            )}
+          </div>
+        </AnimatePresence>
       </div>
     </section>
   );

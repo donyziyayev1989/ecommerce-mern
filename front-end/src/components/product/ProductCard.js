@@ -23,6 +23,11 @@ const ProductCard = ({
         <Link className='product-thumb-link' to={`/products/${id}`}>
           <img src={thumbnail} alt={title} />
         </Link>
+        {discountPercentage && (
+          <span className='badge badge-danger rounded-0'>
+            Sale -{Math.ceil(discountPercentage)} %
+          </span>
+        )}
         <span
           className='product-wishlist-btn'
           data-toggle='tooltip'
@@ -42,7 +47,7 @@ const ProductCard = ({
           <Link to={`/products/${id}`}>{title}</Link>
         </h3>
 
-        {!stock && <span class='text-muted'>Out of stock</span>}
+        {!stock && <span className='text-muted'>Out of stock</span>}
 
         <span className='text-primary'>
           {oldPrice && <del className='text-muted mr-1'>${oldPrice}</del>} $

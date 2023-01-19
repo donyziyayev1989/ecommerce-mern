@@ -1,6 +1,6 @@
 import React from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Pagination = ({
   numOfPages,
@@ -12,6 +12,8 @@ const Pagination = ({
   const pages = Array.from({ length: numOfPages }, (_, index) => {
     return index + 1;
   });
+
+  console.log(currentPage);
   return (
     <nav aria-label='Pagination'>
       <ul className='pagination'>
@@ -40,13 +42,13 @@ const Pagination = ({
               }`}
               key={page}
             >
-              <button
+              <Link
                 to={`?page=${page}`}
                 className='page-link'
                 onClick={(e) => goToPage(page)}
               >
                 {page}
-              </button>
+              </Link>
             </li>
           );
         })}
