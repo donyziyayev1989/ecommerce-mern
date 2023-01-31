@@ -20,11 +20,15 @@ app.get('/', (req, res) => {
 const authRoute = require('./routes/authRoute');
 const productRoute = require('./routes/productRoute');
 const blogRoute = require('./routes/blogRoute');
-const categoryRoute = require('./routes/categoryRoute');
+const prodCategoryRoute = require('./routes/prodCategoryRoute');
+const blogCategoryRoute = require('./routes/blogCategoryRoute');
+const brandRoute = require('./routes/brandRoute');
 app.use('/api/user', authRoute);
 app.use('/api/product', productRoute);
 app.use('/api/blog', blogRoute);
-app.use('/api/category', categoryRoute);
+app.use('/api/product-category', prodCategoryRoute);
+app.use('/api/blog-category', blogCategoryRoute);
+app.use('/api/brand', brandRoute);
 
 // Always use error middlewares below the routes
 app.use(notFound);

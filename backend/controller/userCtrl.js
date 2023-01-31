@@ -197,8 +197,8 @@ const requestPasswordReset = asyncWrapper(async (req, res) => {
 // https://dev.to/cyberwolves/how-to-implement-password-reset-via-email-in-node-js-132m
 
 const resetPassword = asyncWrapper(async (req, res) => {
-  const { userId, token } = req.params;
-  const { password } = req.body;
+  const { userId } = req.params;
+  const { password, token } = req.body;
   const findUser = await User.findById(userId);
   if (!findUser) {
     return res.status(400).send('Not found User: invalid link or expired');
@@ -228,6 +228,34 @@ const resetPassword = asyncWrapper(async (req, res) => {
   });
 });
 
+const addToWishlist = asyncWrapper(async (req, res) => {
+  const { _id, wishlist } = req.user;
+  const { prodId } = req.body;
+  let user;
+  const alreadyAdded = wishlist.find(
+    (id) => id.toString() === prodId.toString()
+  );
+
+  if (alreadyAdded) {
+    user = await User.findByIdAndUpdate(
+      _id,
+      {
+        $pull: { wishlist: prodId },
+      },
+      { new: true }
+    );
+  } else {
+    user = await User.findByIdAndUpdate(
+      _id,
+      {
+        $push: { wishlist: prodId },
+      },
+      { new: true }
+    );
+  }
+  res.status(200).json(user);
+});
+
 module.exports = {
   createUser,
   loginUser,
@@ -241,4 +269,5 @@ module.exports = {
   logoutUser,
   requestPasswordReset,
   resetPassword,
+  addToWishlist,
 };

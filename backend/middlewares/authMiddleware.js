@@ -13,7 +13,7 @@ const verifyToken = asyncHandler(async (req, res, next) => {
         next();
       }
     } catch (error) {
-      throw new Error('Not authorized, token is expired, please login again ');
+      throw new Error('Not authorized, token is expired, please login again');
     }
   } else {
     throw new Error('There is no token ');
